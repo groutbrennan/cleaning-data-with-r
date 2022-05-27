@@ -35,10 +35,10 @@ example_df <- bookings_df %>%
 head(example_df)  
 
 ## Find the hotel that host the most children.
-children_df <- bookings_df %>%
-  select(hotel, children) %>% 
+adults_df <- bookings_df %>%
+  select(hotel, adults) %>% 
   group_by(hotel) %>% 
   drop_na() %>% 
-  summarize(sum_children = sum(children))
-head(children_df)
+  summarize(sum_adults = sum(adults))
+head(adults_df)
 

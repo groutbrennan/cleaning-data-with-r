@@ -1,0 +1,40 @@
+---
+title: "Penguins Plots"
+author: "Brennan"
+date: '2022-06-01'
+output: html_document
+---
+# Penguin Plots: Practice analysis
+
+## Basic formatting options for r markdown notebooks:
+
+* To start a new paragraph, end a line with two spaces
+* To apply italics to a word or phrase, place an asterisk at the beginning and at the end of the word or phrase, for example, *italics works*
+* To apply bold to a word or phrase, place two asterisks at the beginning and at the end of the word or phrase, for example, **bold is useful**
+* To create a header, type a hashtag (#) followed by a space and your text for example: # Getting Started with R Markdown
+
+When creating headers keep the following in mind:
+* Headers will appear in blue
+* A single hashtag is the largest header
+* The more hashtags you add (up to six), the smaller the header
+
+To format comments in your notebook, follow these steps:
+1. Click in a line above the code chunk you added but below the YAML section.
+2. Type a main header for your report using a single hashtag. You might want to restate the title in the YAML in a different way or add to it with a short description.
+3. Add a smaller header below that to label the first part of your programming. Follow that with a description of the code chunk that you added.
+
+### Setting up my environment #
+Notes: Setting up my R environment by loading the `tidyverse` and `palmerpenguins` packages:
+
+```{r eval=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+```{r loading packages}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+

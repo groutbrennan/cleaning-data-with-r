@@ -1,0 +1,49 @@
+---
+title: "rmarkdown_notebook_penguins"
+author: "Brennan"
+date: '2022-06-02'
+output: html_document
+---
+
+## Penguin Data
+
+```{r ggplot for penguin data}
+library(ggplot2)
+library(palmerpenguins)
+
+data(penguins)
+View(penguins)
+```
+
+## Penguin data viz
+
+
+```{r ggplot for penguin data visualization, warning=FALSE}
+ggplot(data = penguins) +
+  geom_point(mapping = aes(x=flipper_length_mm, y=body_mass_g))
+```
+
+## Hotel Bookings Viz
+
+```{r Hotel Bookings Viz, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readr)
+library(dplyr)
+
+hotel_bookings <- read_csv("C:/Users/groutb/Documents/data-analysis-course/spreadsheets/hotel_bookings.csv")
+
+## Find the min and max dates for the duration of this data set.
+mindate <-min(hotel_bookings$arrival_date_year)
+maxdate <- max(hotel_bookings$arrival_date_year)
+
+ggplot(data = hotel_bookings) +
+  geom_bar(mapping = aes(x=market_segment)) +
+  facet_wrap(~hotel) + 
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Comparison of market segments by hotel type for hotel bookings", 
+       caption = paste0("Data from: ", mindate, " to ", maxdate),
+       x="Market Segment",
+       y="Number of Bookings")
+```
+
+

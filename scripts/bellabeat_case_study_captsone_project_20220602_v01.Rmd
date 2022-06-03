@@ -1,0 +1,67 @@
+---
+title: "Bellabeat Case Study"
+author: "Brennan Grout"
+date: '2022-06-02'
+output: html_document
+---
+
+## Ask
+Analyze smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices. Select one Bellabeat product to apply thse insights.
+
+### Questions
+1. What are some trends in smart device usage?
+2. How could these trends apply to Bellabeat customers?
+3. How coud these trends help influence Bellabeat marketing strategy?
+
+### Deliverables
+1. A clear summary of the business task
+2. A description of all data sources used
+3. Documentation of any cleaning or manipulating of data
+4. A summary of your analysis
+5. Supporting visualizations and key findings
+6. Your top high-level content recommendations based on your analysis.
+
+#### Guiding questions
+* **What is the problem you are trying to solve?** Gain insight into how consumers use non-Bellabeat smart devices, then select one Bellabeat product to apply the insights to in a presentation.
+
+* **How can your insights drive business decisions?** Insights can drive business decisions because we can find how people are actually interacting with their smart devices, so we can gain insight on how consumers interatct with their personal products. Allowing Bellabeat to take advantage of this insight and implement these insights into their own products.
+
+#### Key tasks
+1. **Identify the business task** Unlock new growth opportunities for the company by gaining insight into how consumers are using their smart devices. This will help guide a marketing startegy for the company.
+
+2. **Consider stakeholders**
+* Urska Srse: Cofounder and Chief Creative Officer - Primary stakeholder
+* Sando Mur: Mathmetician and cofounder - Primary stakeholder
+* Ballabeat marketing analytics team - Secondary stakeholders
+
+#### Deliverable
+* A clear statement of the business task.
+
+## Prepare
+
+#### Guiding questions
+* **Where is your data stored?** Locally in project filepath.
+* **How is the data organized? Is it long or wide format?** Data is organized with multiple csv spread sheets. The data is in long format.
+* **Are there issues with bias or credibility in this data?** The bias would be people who could afford fitbit trackers. The data is credible because it is cited and the data was collected during a 2 month period which is an acceptaple amount of time. In addition, the sample size was 30, which is the analytical recommended minimum data sample size where an average result of a sample starts to represent the average result of a population.
+* **How are you addressing licensing, privacy, security, and accessibility?** Going to cite the license from the Kaggle data source. For secutiry measures I will ensure no personal information will be published with this notebook. Accessibility issues may be encountered so I will ensure any images used will have alt tags, chart plots will be descriptive and I will not use colors that can't be seen by people with color blindness.
+* **How did you veify the data's integrity?** I verified the data's integrity by reviewing the data entity - making sure each table has a primary key value, filtered columns to check for blank values, and no duplicate sources of data.
+* **How does it help to answer your question?** Ensures the data is credible and valid so we can have a high confidence level.
+* **Are there any problems with the data?** I don't see any problems with the data, except there are alot of rows.
+
+#### Key tasks
+1. **Download data and store it appropriately.** Downloaded to my local machine and stored in a directory.
+2. **Identify how it's organized** The data is organized by seperate csv files that can be queried using the primary keys of each table.
+3. **Sort and filter the data.** I turned some of the date time stamps to just the date. Then sorted the data by date oldest to newest ascended in the spreadsheets. I also normalized all of the column names to lowercase and underscore _ spaces fillers. 
+4. **Determine the credibility of the data.** The data is credible because it is cited and the table's structure are normalized.
+
+#### Deliverables
+* **A description of all data sources used**
+I chose the following data sources because I wanted to analyze how people use their fitbit to track their daily steps to see if they sleep longer at night.
+1. dailyCalories_merged.csv
+2. dailySteps_merged.csv
+3. heartrate_seconds_merged.csv
+4. hourlySteps_merged.csv
+5. minuteSleep_merged.csv
+6. sleepDay_merged.csv
+7. weigthLogInfo_merged.csv
+

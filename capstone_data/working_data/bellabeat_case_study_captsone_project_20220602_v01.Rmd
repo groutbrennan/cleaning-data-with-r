@@ -1,0 +1,227 @@
+---
+title: "Bellabeat Case Study"
+author: "Brennan Grout"
+date: '2022-06-02'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Ask
+Analyze smart device usage data in order to gain insight into how consumers use non-Bellabeat smart devices. Select one Bellabeat product to apply thse insights.
+
+### Questions
+1. What are some trends in smart device usage?
+2. How could these trends apply to Bellabeat customers?
+3. How coud these trends help influence Bellabeat marketing strategy?
+
+### Deliverables
+1. A clear summary of the business task
+2. A description of all data sources used
+3. Documentation of any cleaning or manipulating of data
+4. A summary of your analysis
+5. Supporting visualizations and key findings
+6. Your top high-level content recommendations based on your analysis.
+
+#### Guiding questions
+* **What is the problem you are trying to solve?** Gain insight into how consumers use non-Bellabeat smart devices, then select one Bellabeat product to apply the insights to in a presentation.
+
+* **How can your insights drive business decisions?** Insights can drive business decisions because we can find how people are actually interacting with their smart devices, so we can gain insight on how consumers interatct with their personal products. Allowing Bellabeat to take advantage of this insight and implement these insights into their own products.
+
+#### Key tasks
+1. **Identify the business task** Unlock new growth opportunities for the company by gaining insight into how consumers are using their smart devices. This will help guide a marketing startegy for the company.
+
+2. **Consider stakeholders**
+* Urska Srse: Cofounder and Chief Creative Officer - Primary stakeholder
+* Sando Mur: Mathmetician and cofounder - Primary stakeholder
+* Ballabeat marketing analytics team - Secondary stakeholders
+
+#### Deliverable
+* A clear statement of the business task.
+
+## Prepare
+
+#### Guiding questions
+* **Where is your data stored?** Locally in project filepath.
+* **How is the data organized? Is it long or wide format?** Data is organized with multiple csv spread sheets. The data is in long format.
+* **Are there issues with bias or credibility in this data?** The bias would be people who could afford fitbit trackers. The data is credible because it is cited and the data was collected during a 2 month period which is an acceptaple amount of time. In addition, the sample size was 30, which is the analytical recommended minimum data sample size where an average result of a sample starts to represent the average result of a population.
+* **How are you addressing licensing, privacy, security, and accessibility?** Going to cite the license from the Kaggle data source. For secutiry measures I will ensure no personal information will be published with this notebook. Accessibility issues may be encountered so I will ensure any images used will have alt tags, chart plots will be descriptive and I will not use colors that can't be seen by people with color blindness.
+* **How did you veify the data's integrity?** I verified the data's integrity by reviewing the data entity - making sure each table has a primary key value, filtered columns to check for blank values, and no duplicate sources of data.
+* **How does it help to answer your question?** Ensures the data is credible and valid so we can have a high confidence level.
+* **Are there any problems with the data?** I don't see any problems with the data, except there are alot of rows.
+
+#### Key tasks
+1. **Download data and store it appropriately.** Downloaded to my local machine and stored in a directory.
+2. **Identify how it's organized** The data is organized by seperate csv files that can be queried using the primary keys of each table.
+3. **Sort and filter the data.** I turned some of the date time stamps to just the date. Then sorted the data by date oldest to newest ascended in the spreadsheets. I also normalized all of the column names to lowercase and underscore _ spaces fillers. 
+4. **Determine the credibility of the data.** The data is credible because it is cited and the table's structure are normalized.
+
+#### Deliverables
+* **A description of all data sources used**
+I chose the following data sources because I wanted to analyze how people use their fitbit to track their daily steps to see if they sleep longer at night.
+1. dailySteps_merged.csv
+2. sleepDay_merged.csv
+
+## Process
+Process data for analysis
+
+#### Guiding questions
+* **What tools are you choosing and why?** I am using excel spreadsheets, SQL, Rstudio, and Tableau. I am using excel to clean the data in the spreadsheets. Then I will use SQL to join the data I need from the tables. Then I will tidy the data in Rstudio and create a viz using ggplot2. Along with creating a r markdown notebook, this notebook actually... Lastly I will upload the data to Tableau and create viz's in Tableau public.
+* **Have you ensured your data's integrity?** Yes.
+* **What steps have you taken to ensure your data is clean?** I filtered all of the data values in a Excel and made sure there were no blank/null values. 
+* **How can you verify that your data is clean and ready to analyze?** I loaded my data sets into Rstudio and checked data for irregulatrities, unique values, and missing values. I converted the dates from strings to date data types so it will be easy to query in SQL and will be acrrate during analysis.
+* **Have you documented your cleaning process so you can review and share those results?** Yes, I added the cleaning log to this notebook and added the script name for people to review how I cleaned this data set in Rstudio.
+
+#### Key tasks
+* **Check the data for errors.** I checked the data for errors and they are free of errors.
+* **Choose your tools.** I am using Rstudio, Excel, and Tableau.
+* **Transform the data so you can work with it effectively.** Selected the columns I will need.
+* **Document the cleaning prcoess.** I added my cleaning log to this notebook.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readr)
+library(lubridate)
+library(dplyr)
+
+## Clean and verify data is cleaned using the tidyverse library and dplyr.
+## Load the data frames and bind it to a variable data frame.
+daily_steps_df <- read_csv("dailySteps_merged.csv")
+
+## Familiarize yourself with the data set by viewing the column names and structure. 
+## Check for structural errors (column names are normalized, data types are correct, mislabeled variables, string inconsistencies)
+head(daily_steps_df)
+colnames(daily_steps_df)
+str(daily_steps_df)
+typeof(daily_steps_df$date)
+
+## Check unique values and for missing values.
+unique(daily_steps_df$id)
+unique(daily_steps_df$date)
+unique(daily_steps_df$step_total)
+
+## Load the sleepDay csv data frame then bind it to a new data frame variable.
+sleep_day_df <- read_csv("sleepDay_merged.csv")
+
+head(sleep_day_df)
+str(sleep_day_df)
+typeof(sleep_day_df$date)
+
+## Check unique values and for missing values.
+unique(sleep_day_df$id)
+unique(sleep_day_df$date)
+unique(sleep_day_df$total_sleep_records)
+unique(sleep_day_df$total_minutes_asleep)
+unique(sleep_day_df$total_time_in_bed)
+
+## Check for data irregularities (invalid values, outliers)
+summarize_steps <- daily_steps_df %>% 
+  summarize(
+    min_steps = min(step_total),
+    max_steps = max(step_total),
+    avg_steps = mean(step_total)
+  )
+summarize_steps
+
+summarize_sleep <- sleep_day_df %>% 
+  summarize(
+    min_sleep = min(total_minutes_asleep),
+    max_sleep = max(total_minutes_asleep),
+    avg_sleep = mean(total_minutes_asleep)
+  )
+summarize_sleep
+```
+
+
+## Analyze
+
+#### Guidng questions
+* **How should you organize your data to perform analysis on it?** I sorted the date fields to be the same organized by descending oldest to newest so its easier to validate and join. Then I joined the steps and sleep data frames.
+* **Has your data been properly formatted?** I reformatted the date fields from character strings to date type.
+* **What surprises did you discover in the data?** Surprises I found was that not everyone who tracked their steps, also tracked their sleep. Which didnt return as many as many results as I thought it would after joined the two tables.
+* **What trends or relationships did you find in the data?** Some trends I saw were the more steps people took, the less they slept. This was surprising because my initial hypothesis was the more steps people took during the dat, the longer people slept. However, after analyzing this data, I realized my sleeping pattern when I walk more during the day. I tend to sleep less than when I don't walk as muuch. More steps correlated less sleeping time periods is a correlation, but may not be the causation. This would need to be researched further.
+* **How will these insights help answer your business questions?** These insights will help answer my business question by answering the fact that people are in fact using their smart devices to track their steps during the day, then tracking their sleep during the nights they track their steps. The data has shown that the more steps you take during the day, the less sleep you need at night. This is great information to know for people who are on the fence buying a Bellabeat app since it tracks your sleep habits.
+
+#### Key tasks
+1. **Aggregate your data so it's useful and accessible.** I aggregated my data by joining them with MySQL then exported the data via csv so the data is accessible in Rstudio.
+2. **Organize and format your data.** I organized and formatted my data by deleting the redundant date columns created from the join, I also deleted the redundant id column that was created after the join. The date column was still formatted correctly after the join.
+3. **Perform calculations.** I performed a min and max calculation on the dates to dynamically show the min and max date periods of the data to be displayed on chart plot viz caption.
+4. **Identify trends and relationships.** The trends shown from the analysis are the more steps people took during the day, the less amount of sleep they needed at night. I used a scatterplot for this analysis to display each data point.
+
+#### Delivery
+* **A summary of your analysis.** The more steps people take during the day, the less sleep people need at night. This was shown accross all participants of the survey.
+
+## Share
+#### Guidng questions
+* **Were you able to answer the business question?** Yes, I was able to answer the business question.
+* **What story does your data tell?** There is a correlation between the more people walk during the day, the less sleep they need overall. This gives participants a better quality of life during the day since it allows them more time during the day to complete their tasks and potentially gives them more time for personal lives as well.
+* **How do your findings relate to your original question?** My findings relate to how consumers use their smart devices in their daily lives, by showing people use their devices to track their daily steps and they use them to track their nightly sleep periods.
+* **Who is your audience? What is the best way to communicate with them?** Our audience is people in the workforce looking to be more efficient in their daily lives while living a healthier lifestyle. The best way to communicate with them is online via social media channels and search ads.
+* **Can data visualization help you share your findings?** Yes, data viz's can help me share my findings by showing a scatter plot of all consumer data points and showing a smooth line trend to identify total sleeping minutes and total steps.
+* **Is your presentation accessible to your audience?** Yes, we could use the viz's to show remarketing audiences on how tracking your steps and sleep informs people how much sleep they get after tracking their daily steps.
+
+#### Key tasks
+1. **Dtermine the best way to share your findings.** The best way to share my findings is through power point.
+2. **Create effective data visualizations.** I created a ggplot scatter plot with a smooth line to display data point trents.
+3. **Present your findings.** I will present my findings to someone who is not involved with the project and who doesn't know the data.
+4. **Ensure your work is accessible.**
+
+#### Deliverable
+* **Supporting visualizations and key findings.**
+
+```{r message=FALSE, warning=FALSE}
+## Analyze data
+library(tidyverse)
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+## Import data frames used for analysis.
+steps_sleep_df <- read_csv("joined_steps_days_20220603_v03.csv")
+
+## Use min and max to find data date ranges.
+mindate <- min(steps_sleep_df$date)
+maxdate <- max(steps_sleep_df$date)
+
+## Use ggplot scatter plot to chart cleaned data.
+ggplot(data = steps_sleep_df) +
+  geom_smooth(mapping = aes(x=step_total, y=total_minutes_asleep)) +
+  geom_point(mapping = aes(x=step_total, y=total_minutes_asleep)) +
+  labs(title = "Tracked Steps vs Tracked Sleep",
+       subtitle = "Comparison of people who tracked their daily steps and  their nightly sleep times.",
+       caption = paste0("Data from: ", mindate, " to ", maxdate),
+       x="Total Steps",
+       y="Total Sleeping Minutes")
+```
+
+## Act
+#### Guiding questions
+* **What is your final conclusion based on your analytics?** The final conclusion is that people are wearing smart devices to track their daily steps and to track their nightly sleep periods. The more steps people take during the day, th eless amount of time people need to sleep for. This is helpful for people who are looking to make their daily lives more efficient.
+* **How could your team and business apply your insights?** My team and business could apply these insights by marketing the Bellabeat app to people who are interested in having a more healthy and efficient lifestyle. We could do this by explaining that the more steps you take, the less sleep you actually need at night. This gives you more awake hours during the day to get things done or gives you more time to yourself.
+* **What next steps would you or your stakeholders take based on your insights?** The next steps would be to research the correlation between daily steps and sleeping minutes to find if there is a causation between the two. If there is, then we could market the app to people looking to have a more efficient lifestyle with more steps during the day and less needed sleep at night.
+* **Is there additional data you could use to expand your findings?** Yes, I think comparing heart rate and calories burned to steps and minutes sleeping to find if there is even more correlation between the data sets. Along with finding consumer's ages to see if they just sleep less with or without more steps. There may be some underlying factors that are causing less sleep that aren't correlated to more steps that we need to investigate further.
+
+#### Key tasks
+1. **Create your portfolio.**
+2. **Add your case study.**
+3. **Practice prsenting your case study to a friend or family member.**
+
+#### Deliverable
+* **Your top high-level insights based on your analysis.**
+
+## Cleaning Log
+`cleaning_data_capstone_project_20220603_v01.R`
+
+#### 2022-06-02
+1. Changed column names to all lower case and added under score where there were spaces.
+2. Split time from dates and changed column name to date.
+3. Filtered data to check for null values, found none.
+
+#### 2022-06-03
+1. Imported data into Rstudio and viewed data.
+2. Converted date data types from string characters to date in Excel.
+3. Checked for data irregularities, unique values, and missing values.
+4. Joined the sleep and steps tables on their id and dates. 
+5. Removed the id and date duplicates.
+
+
